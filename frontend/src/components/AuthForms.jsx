@@ -114,7 +114,6 @@
 
 // export default AuthForms; 
 
-
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -133,15 +132,13 @@ const AuthForms = () => {
     setMessage('');
 
     if (isLogin) {
-      // Login
       const { error } = await signInWithPassword(email, password);
       if (error) {
         setMessage(`Login failed: ${error.message}`);
       } else {
-        navigate('/home'); // Redirect to home after successful login
+        navigate('/home');
       }
     } else {
-      // Signup
       const { error } = await signUp(email, password);
       if (error) {
         setMessage(`Signup failed: ${error.message}`);
@@ -149,7 +146,7 @@ const AuthForms = () => {
         setMessage('Signup successful!');
         setEmail('');
         setPassword('');
-        setIsLogin(true); // Switch to login form
+        setIsLogin(true);
       }
     }
   };
@@ -232,4 +229,6 @@ const AuthForms = () => {
 };
 
 export default AuthForms;
+
+
 
