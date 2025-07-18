@@ -114,15 +114,16 @@
 
 // export default AuthForms; 
 
+
 import React, { useState } from 'react';
-import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const AuthForms = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(true); // Toggle between login/signup
 
   const { signUp, signInWithPassword, signOut, user } = useAuth();
   const navigate = useNavigate();
@@ -132,21 +133,23 @@ const AuthForms = () => {
     setMessage('');
 
     if (isLogin) {
+      // Login
       const { error } = await signInWithPassword(email, password);
       if (error) {
         setMessage(`Login failed: ${error.message}`);
       } else {
-        navigate('/home');
+        navigate('/home'); // ✅ Redirect after login
       }
     } else {
+      // Signup
       const { error } = await signUp(email, password);
       if (error) {
         setMessage(`Signup failed: ${error.message}`);
       } else {
-        setMessage('Signup successful!');
+        setMessage('Check your email for the verification link!');
         setEmail('');
         setPassword('');
-        setIsLogin(true);
+        setIsLogin(true); // Switch to login after signup
       }
     }
   };
@@ -229,6 +232,5 @@ const AuthForms = () => {
 };
 
 export default AuthForms;
-
 
 
